@@ -14,6 +14,7 @@ public class RedisConfig {
     @Bean
     public RedisCacheConfiguration redisCacheConfiguration() {
         return RedisCacheConfiguration.defaultCacheConfig()
-                                      .serializeValuesWith(SerializationPair.fromSerializer(RedisSerializer.string()));
+                                      //.serializeValuesWith(SerializationPair.fromSerializer(RedisSerializer.string()));
+                                      .serializeValuesWith(SerializationPair.fromSerializer(RedisSerializer.json()));
     }
 }

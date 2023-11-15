@@ -1,6 +1,5 @@
 package learn.redis.annotation.domain.model;
 
-import java.io.Serializable;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
-public class User implements Serializable {
+public class User {
 
     private Long seq;
 

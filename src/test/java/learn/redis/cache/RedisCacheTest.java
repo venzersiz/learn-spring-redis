@@ -2,8 +2,6 @@ package learn.redis.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import learn.redis.annotation.domain.model.Address;
 import learn.redis.annotation.domain.model.User;
@@ -65,7 +63,7 @@ class RedisCacheTest {
     }
 
     @Test
-    void valueAsObject() throws JsonProcessingException {
+    void valueAsObject() {
         Cache cache = cacheManager.getCache("d");
 
         List<Address> addresses = List.of(new Address("주소1"), new Address("주소2"));
@@ -79,14 +77,18 @@ class RedisCacheTest {
         // User cachedUser = (User) cache.get("user1").get();
 
         // 2. StringRedisSerializer (with Jackson ObjectMapper)
-        ObjectMapper mapper = new ObjectMapper();
-        cache.put("user1", mapper.writeValueAsString(user));
+        // ObjectMapper mapper = new ObjectMapper();
+        // cache.put("user1", mapper.writeValueAsString(user));
         // 값은 아래처럼 직렬화되어 저장된다
         // {"seq":1,"name":"김백세","addresses":[{"name":"주소1"},{"name":"주소2"}]}
 
-        String json = (String) cache.get("user1").get();
-        User cachedUser = mapper.readValue(json, User.class);
+        // String json = (String) cache.get("user1").get();
+        // User cachedUser = mapper.readValue(json, User.class);
 
+        // 3. GenericJackson2JsonRedisSerializer
+        cache.put("user1", user);
+
+        User cachedUser = (User) cache.get("user1").get();
         assertThat(cachedUser.getSeq()).isEqualTo(1L);
         assertThat(cachedUser.getName()).isEqualTo("김백세");
         assertThat(cachedUser.getAddresses().get(0).getName()).isEqualTo("주소1");

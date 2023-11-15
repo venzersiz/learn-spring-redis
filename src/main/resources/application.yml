@@ -5,5 +5,5 @@ logging:
 spring:
   cache:
     cache-names: a, b
-    redis:
-      time-to-live: 5s
+#    redis:
+#      time-to-live: 5s

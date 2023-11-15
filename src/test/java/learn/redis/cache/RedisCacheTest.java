@@ -2,6 +2,8 @@ package learn.redis.cache;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import learn.redis.annotation.domain.model.Address;
 import learn.redis.annotation.domain.model.User;
@@ -63,17 +65,28 @@ class RedisCacheTest {
     }
 
     @Test
-    void valueAsObject() {
+    void valueAsObject() throws JsonProcessingException {
         Cache cache = cacheManager.getCache("d");
 
         List<Address> addresses = List.of(new Address("주소1"), new Address("주소2"));
         User user = new User(1L, "김백세", addresses);
-        cache.put("user1", user); // d::user1이라는 키로 저장됨
-        // 값은 아래처럼 직렬화되어 저장된다
+
+        // 1. JdkSerializationRedisSerializer
+        // cache.put("user1", user); // d::user1이라는 키로 저장됨
+        // 기본설정인 JdkSerializationRedisSerializer를 사용하면 값은 아래처럼 직렬화되어 저장된다
         // ��sr(learn.redis.annotation.domain.model.User:V����vL	addressestLjava/util/List;LnametLjava/lang/String;LseqtLjava/lang/Long;xpsrjava.util.CollSerW���:Itagxpwsr+learn.redis.annotation.domain.model.Address���M�9HLnameq~xpt주소1sq~t주소2xt	김백세srjava.lang.Long;��̏#�Jvaluexrjava.lang.Number���
         //                                                                                                                                      ��xp
+        // User cachedUser = (User) cache.get("user1").get();
 
-        User cachedUser = (User) cache.get("user1").get();
+        // 2. StringRedisSerializer (with Jackson ObjectMapper)
+        ObjectMapper mapper = new ObjectMapper();
+        cache.put("user1", mapper.writeValueAsString(user));
+        // 값은 아래처럼 직렬화되어 저장된다
+        // {"seq":1,"name":"김백세","addresses":[{"name":"주소1"},{"name":"주소2"}]}
+
+        String json = (String) cache.get("user1").get();
+        User cachedUser = mapper.readValue(json, User.class);
+
         assertThat(cachedUser.getSeq()).isEqualTo(1L);
         assertThat(cachedUser.getName()).isEqualTo("김백세");
         assertThat(cachedUser.getAddresses().get(0).getName()).isEqualTo("주소1");

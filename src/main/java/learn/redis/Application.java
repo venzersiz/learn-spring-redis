@@ -5,11 +5,9 @@ import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 
 @SpringBootApplication
-@EnableCaching
 @RequiredArgsConstructor
 public class Application {
 

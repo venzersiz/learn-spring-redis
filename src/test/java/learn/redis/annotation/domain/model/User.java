@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
+//@JsonTypeName("user")
 public class User {
 
     private Long seq;

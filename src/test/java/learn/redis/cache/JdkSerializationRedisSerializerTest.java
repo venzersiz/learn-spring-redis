@@ -15,7 +15,7 @@ import org.springframework.cache.annotation.EnableCaching;
 @SpringBootTest
 @EnableCaching
 //@Import(JdkSerializationRedisSerializerRedisConfig.class) // 기본 설정이라 이 부분은 없어도 무관
-class ValueAsObjectWithJdkSerializationRedisSerializerTest {
+class JdkSerializationRedisSerializerTest {
 
     @Autowired
     CacheManager cacheManager;

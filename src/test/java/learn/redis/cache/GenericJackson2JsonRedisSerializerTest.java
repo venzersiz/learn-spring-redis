@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootTest
 @Import(GenericJackson2JsonRedisSerializerRedisConfig.class)
-class ValueAsObjectWithGenericJackson2JsonRedisSerializerTest {
+class GenericJackson2JsonRedisSerializerTest {
 
     @Autowired
     CacheManager cacheManager;
@@ -59,7 +59,7 @@ class ValueAsObjectWithGenericJackson2JsonRedisSerializerTest {
 
     @Test
     void genericJackson2JsonRedisSerializerWithDifferentType() {
-        Cache cache = cacheManager.getCache("e");
+        Cache cache = cacheManager.getCache("g");
 
         List<Address> addresses = List.of(new Address("주소1"), new Address("주소2"));
         User user = new User(1L, "김백세", addresses);
@@ -68,7 +68,7 @@ class ValueAsObjectWithGenericJackson2JsonRedisSerializerTest {
 
         // 다른 애플리케이션에서 캐쉬 조회를 한다고 가정
         assertThatThrownBy(() -> {
-            User2 cachedUser = (User2) cache.get("user1").get();
+            User2 cachedUser = (User2) cache.get("user1");
         }).isInstanceOf(ClassCastException.class);
         // 동일 구조의 모델임에도 불구하고 클래스명이 달라서 예외가 발생한다
         // 클래스명이 동일하고 패키지가 달라도 예외 발생

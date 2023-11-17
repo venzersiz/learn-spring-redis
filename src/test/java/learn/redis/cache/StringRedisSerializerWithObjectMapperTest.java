@@ -17,7 +17,7 @@ import org.springframework.context.annotation.Import;
 
 @SpringBootTest
 @Import(StringRedisSerializerRedisConfig.class)
-class ValueAsObjectWithStringRedisSerializerWithObjectMapperTest {
+class StringRedisSerializerWithObjectMapperTest {
 
     @Autowired
     CacheManager cacheManager;

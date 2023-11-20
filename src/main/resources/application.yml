@@ -5,5 +5,14 @@ logging:
 spring:
   cache:
     cache-names: a, b
-#    redis:
-#      time-to-live: 5s
+    redis:
+      time-to-live: 1h
+
+krevis:
+  cache:
+    redis:
+      caches:
+        - name: "someapi:a"
+          time-to-live: 5s
+        - name: "someapi:b"
+          time-to-live: 10s

@@ -37,4 +37,16 @@ public class DummyUserRepository {
             return null;
         }
     }
+
+    @Cacheable(cacheNames = "someapi:user") // key를 생략해도 파라미터의 값이 키가 된다
+    public User findUser3(long id) {
+        List<Address> addresses = List.of(new Address("주소1"), new Address("주소2"));
+        return new User(id, "김백세", addresses);
+    }
+
+    @Cacheable(cacheNames = "someapi:user4")
+    public User findUser4() {
+        List<Address> addresses = List.of(new Address("주소1"), new Address("주소2"));
+        return new User(4L, "김백세", addresses);
+    }
 }

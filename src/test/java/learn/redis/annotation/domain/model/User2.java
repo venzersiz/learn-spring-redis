@@ -1,6 +1,5 @@
 package learn.redis.annotation.domain.model;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -8,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PACKAGE)
 @Getter
-@JsonTypeName("user")
+//@JsonTypeName("user")
 public class User2 {
 
     private Long seq;

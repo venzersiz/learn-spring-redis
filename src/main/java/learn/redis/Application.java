@@ -1,6 +1,5 @@
 package learn.redis;
 
-import jakarta.annotation.PostConstruct;
 import java.util.Arrays;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.SpringApplication;
@@ -17,7 +16,7 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @PostConstruct
+    //@PostConstruct
     public void init() {
         Arrays.stream(applicationContext.getBeanDefinitionNames()).forEach(System.out::println);
     }

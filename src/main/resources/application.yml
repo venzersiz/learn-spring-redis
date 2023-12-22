@@ -1,12 +1,30 @@
 logging:
   level:
     root: info
+    io.github.resilience4j.circuitbreaker.internal.CircuitBreakerStateMachine: debug
+
+resilience4j:
+  circuitbreaker:
+    configs:
+      default:
+        # ~ Failure
+        failure-rate-threshold: 50
+        #minimum-number-of-calls: 5
+        minimum-number-of-calls: 1
+  timelimiter:
+    configs:
+      default:
+        #timeout-duration: 1s
+        timeout-duration: 10s
 
 spring:
   cache:
     cache-names: a, b
     redis:
-      time-to-live: 1h
+      time-to-live: 5s
+  data:
+    redis:
+      port: 63790 # 포트를 틀리게 입력
 
 krevis:
   cache:
